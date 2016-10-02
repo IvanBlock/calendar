@@ -6,6 +6,7 @@ $.ajax({
     cache: false,
     success: function (data) {
         events = data;
+        $('#calendar').fullCalendar('refetchEvents');
     }.bind(this),
     error: function () {
         console.log("Ошибка получения данных")
@@ -19,6 +20,7 @@ $(document).ready(function () {
 
     $("#create").click(onCreateClick);
 
+
     $('#calendar').fullCalendar({
         lang: 'ru',
         header: {
@@ -31,6 +33,28 @@ $(document).ready(function () {
         editable: true,
         eventLimit: true,
         events: events,
+        viewRender: function (view, element) {
+
+            $.ajax({
+                type: 'POST',
+                url: 'events.json', //fixme: get events
+                dataType: 'json',
+                cache: false,
+                data: {
+                    start: new Date(view.start),
+                    end: new Date(view.end)
+                },
+                success: function (data) {
+                    events = data;
+                    $('#calendar').fullCalendar('removeEvents');
+                    $('#calendar').fullCalendar('addEventSource', events);
+                    $('#calendar').fullCalendar('refetchEvents');
+                }.bind(this),
+                error: function () {
+                    console.log("Ошибка получения данных")
+                }.bind(this)
+            });
+        },
         eventRender: function (event, element) {
             if (event.type == "first") {
                 element.css('background-color', 'indianred');
@@ -45,6 +69,14 @@ $(document).ready(function () {
         eventClick: onEventClick
     });
 
+    /*$('button.fc-prev-button').click(function () {
+        console.log($('#calendar').fullCalendar('getDate').format('MM'));
+    });
+
+    $('button.fc-next-button').click(function () {
+        console.log($('#calendar').fullCalendar('getDate').format('MM'));
+    });*/
+
 });
 
 var onCreateClick = function () {
@@ -53,7 +85,7 @@ var onCreateClick = function () {
     $('#newEventEnd').datetimepicker();
 
     $('#createEvent').click(function () {
-        
+
 
         $.ajax({
             type: 'POST',
@@ -66,7 +98,8 @@ var onCreateClick = function () {
             },
             cache: false,
             success: function (data) {
-                //nothing
+                $('#calendar').fullCalendar('refetchEvents');
+
             }.bind(this),
             error: function () {
                 console.log("Ошибка при попытке создания")
@@ -87,7 +120,8 @@ var onEventClick = function (event, element) {
             data: {id: event.id},
             cache: false,
             success: function (data) {
-                //nothing
+                $('#calendar').fullCalendar('refetchEvents');
+
             }.bind(this),
             error: function () {
                 console.log("Ошибка при попытке удаления")
@@ -142,7 +176,8 @@ var onEventClick = function (event, element) {
                 },
                 cache: false,
                 success: function (data) {
-                    //nothing
+                    $('#calendar').fullCalendar('refetchEvents');
+
                 }.bind(this),
                 error: function () {
                     console.log("Ошибка при попытке обновления")
