@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Calendar</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="node_modules/fullcalendar/dist/fullcalendar.css">
+    <link rel="stylesheet" href="jquery.datetimepicker.css">
+
+    <script src="node_modules/fullcalendar/node_modules/jquery/dist/jquery.js"></script>
+    <script src="node_modules/fullcalendar/node_modules/moment/moment.js"></script>
+    <script src="node_modules/fullcalendar/dist/fullcalendar.js"></script>
+    <script src="node_modules/fullcalendar/dist/locale/ru.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="jquery.datetimepicker.full.min.js"></script>
+
+    <script src="calendar.js"></script>
+
+    <style>
+
+        body {
+            margin: 40px 10px;
+            padding: 0;
+            font-family: "Lucida Grande", Helvetica, Arial, Verdana, sans-serif;
+            font-size: 14px;
+        }
+
+        #calendar {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .fc-scroller {
+            overflow-y: hidden !important;
+        }
+
+    </style>
+</head>
+<body>
+
+
+
+<div id='calendar'></div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Придумай че-нибудь</h4>
+            </div>
+            <div class="modal-body">
+                <label for="eventTitle">Название</label>
+                <input type="text" class="form-control" id="eventTitle">
+
+                <label for="eventStart" style="margin-top: 5px">Начало события</label>
+                <input type="text" class="form-control"  id="eventStart"/>
+
+                <label for="eventEnd" style="margin-top: 5px">Конец события</label>
+                <input type="text" class="form-control"  id="eventEnd"/>
+                <div class="row">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="delete" type="button" class="btn btn-danger">Удалить</button>
+                <button id="update" type="button" class="btn btn-primary">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button id="create" type="button" class="btn btn-default" style="margin: 10px">Создать событие</button>
+
+</body>
+</html>

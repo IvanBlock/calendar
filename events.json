@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "title": "73628756y874yuwhkejhfiuerhofrehnkjgngnien73628756y874yuwhkejhfiuerhofrehnkjgngnien",
+    "start": "2016-09-01"
+  },
+  {
+    "title": "работает",
+    "start": "2016-09-07",
+    "end": "2016-09-10"
+  },
+  {
+    "id": 999,
+    "title": "ну просто пиздец",
+    "start": "2016-09-09T16:00:00"
+  },
+  {
+    "id": 999,
+    "title": "да я в ахуе",
+    "start": "2016-09-16T16:00:00"
+  },
+  {
+    "id": 999,
+    "title": "test",
+    "start": "2016-10-16T16:00:00"
+  },
+  {
+    "title": "да ж со внешнего",
+    "start": "2016-09-11",
+    "end": "2016-09-13"
+  },
+  {
+    "title": "Json'а",
+    "start": "2016-09-12T10:30:00",
+    "end": "2016-09-12T12:30:00"
+  },
+  {
+    "title": "вот эт да",
+    "start": "2016-09-12T12:00:00"
+  },
+  {
+    "title": "Meeting",
+    "start": "2016-09-12T14:30:00"
+  },
+  {
+    "title": "Happy Hour",
+    "start": "2016-09-12T17:30:00"
+  },
+  {
+    "title": "Dinner",
+    "start": "2016-09-12T20:00:00"
+  },
+  {
+    "title": "Birthday Party",
+    "start": "2016-09-13T07:00:00"
+  },
+  {
+    "title": "Click for Google",
+    "url": "http://google.com/",
+    "start": "2016-09-28"
+  }
+]
