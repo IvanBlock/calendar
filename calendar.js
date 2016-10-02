@@ -17,10 +17,7 @@ $.datetimepicker.setLocale('ru');
 
 $(document).ready(function () {
 
-    $("#create").click(function () {
-        $("#modalForCreate").modal('show');
-
-    });
+    $("#create").click(onCreateClick);
 
     $('#calendar').fullCalendar({
         lang: 'ru',
@@ -49,6 +46,35 @@ $(document).ready(function () {
     });
 
 });
+
+var onCreateClick = function () {
+    $("#modalForCreate").modal('show');
+    $('#newEventStart').datetimepicker();
+    $('#newEventEnd').datetimepicker();
+
+    $('#createEvent').click(function () {
+        
+
+        $.ajax({
+            type: 'POST',
+            url: 'create/url', //fixme: create url
+            data: {
+                title: $('#newEventTitle').val(),
+                type: $("#newEventType option:selected").val(),
+                start: $('#newEventStart').datetimepicker('getValue'),
+                end: $('#newEventEnd').datetimepicker('getValue')
+            },
+            cache: false,
+            success: function (data) {
+                //nothing
+            }.bind(this),
+            error: function () {
+                console.log("Ошибка при попытке создания")
+            }.bind(this)
+        });
+
+    })
+};
 
 
 var onEventClick = function (event, element) {

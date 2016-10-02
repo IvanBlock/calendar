@@ -56,7 +56,7 @@
                 <label for="eventTitle">Название</label>
                 <input type="text" class="form-control" id="eventTitle">
 
-                <label style="margin-top: 5px">Size</label>
+                <label style="margin-top: 5px">Тип события</label>
                     <select class="form-control" id="eventType">
                         <option value="">Выберите тип</option>
                         <option value="first">Первый</option>
@@ -92,19 +92,28 @@
             </div>
             <div class="modal-body">
                 <label for="eventTitle">Название</label>
-                <input type="text" class="form-control" id="eventTitle">
+                <input type="text" class="form-control" id="newEventTitle">
+
+                <label style="margin-top: 5px">Тип события</label>
+                <select class="form-control" id="newEventType">
+                    <option value="">Выберите тип</option>
+                    <option value="first">Первый</option>
+                    <option value="second">Второй</option>
+                    <option value="third">Третий</option>
+                    <option value="fourth">Четвертый</option>
+                </select>
 
                 <label for="eventStart" style="margin-top: 5px">Начало события</label>
-                <input type="text" class="form-control"  id="eventStart"/>
+                <input type="text" class="form-control"  id="newEventStart"/>
 
                 <label for="eventEnd" style="margin-top: 5px">Конец события</label>
-                <input type="text" class="form-control"  id="eventEnd"/>
+                <input type="text" class="form-control"  id="newEventEnd"/>
                 <div class="row">
 
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="createEvent" type="button" class="btn btn-default" style="margin: 10px">Создать событие</button>
+                <button id="createEvent" type="button" class="btn btn-default" style="margin: 10px">Создать</button>
             </div>
         </div>
     </div>
