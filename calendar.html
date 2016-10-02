@@ -43,7 +43,7 @@
 <div id='calendar'></div>
 
 
-<!-- Modal -->
+<!-- Modal для создания/удаления -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -51,6 +51,44 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Придумай че-нибудь</h4>
+            </div>
+            <div class="modal-body">
+                <label for="eventTitle">Название</label>
+                <input type="text" class="form-control" id="eventTitle">
+
+                <label style="margin-top: 5px">Size</label>
+                    <select class="form-control" id="eventType">
+                        <option value="">Выберите тип</option>
+                        <option value="first">Первый</option>
+                        <option value="second">Второй</option>
+                        <option value="third">Третий</option>
+                        <option value="fourth">Четвертый</option>
+                    </select>
+
+                <label for="eventStart" style="margin-top: 5px">Начало события</label>
+                <input type="text" class="form-control"  id="eventStart"/>
+
+                <label for="eventEnd" style="margin-top: 5px">Конец события</label>
+                <input type="text" class="form-control"  id="eventEnd"/>
+                <div class="row">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="delete" type="button" class="btn btn-danger">Удалить</button>
+                <button id="update" type="button" class="btn btn-primary">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalForCreate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Придумай че-нибудь</h4>
             </div>
             <div class="modal-body">
                 <label for="eventTitle">Название</label>
@@ -66,8 +104,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="delete" type="button" class="btn btn-danger">Удалить</button>
-                <button id="update" type="button" class="btn btn-primary">Сохранить</button>
+                <button id="createEvent" type="button" class="btn btn-default" style="margin: 10px">Создать событие</button>
             </div>
         </div>
     </div>

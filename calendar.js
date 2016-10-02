@@ -1,5 +1,6 @@
 var events;
 $.ajax({
+    type: 'POST',
     url: 'events.json',
     dataType: 'json',
     cache: false,
@@ -17,7 +18,8 @@ $.datetimepicker.setLocale('ru');
 $(document).ready(function () {
 
     $("#create").click(function () {
-        console.log(213);
+        $("#modalForCreate").modal('show');
+
     });
 
     $('#calendar').fullCalendar({
@@ -27,25 +29,36 @@ $(document).ready(function () {
             center: 'title',
             right: 'month,basicWeek,basicDay'
         },
-        defaultDate: '2016-09-12',
-        navLinks: true, // can click day/week names to navigate views
+        defaultDate: new Date(),
+        navLinks: true,
         editable: true,
-        eventLimit: true, // allow "more" link when too many events
+        eventLimit: true,
         events: events,
+        eventRender: function (event, element) {
+            if (event.type == "first") {
+                element.css('background-color', 'indianred');
+            } else if (event.type == "second") {
+                element.css('background-color', 'green');
+            } else if (event.type == "third") {
+                element.css('background-color', 'orange');
+            } else if (event.type == "fourth") {
+                element.css('background-color', 'blue');
+            }
+        },
         eventClick: onEventClick
     });
 
 });
 
 
-
 var onEventClick = function (event, element) {
 
     $("#delete").click(function () {
+
         $.ajax({
             type: 'POST',
             url: 'delete/url', //fixme: delete url
-            data: event.id,
+            data: {id: event.id},
             cache: false,
             success: function (data) {
                 //nothing
@@ -98,6 +111,7 @@ var onEventClick = function (event, element) {
                 data: {
                     id: event.id,
                     startEvent: $('#eventStart').datetimepicker('getValue'),
+                    typeEvent: $("#eventType option:selected").val(),
                     endEvent: $('#eventEnd').datetimepicker('getValue')
                 },
                 cache: false,

@@ -2,16 +2,20 @@
   {
     "id": 1,
     "title": "73628756y874yuwhkejhfiuerhofrehnkjgngnien73628756y874yuwhkejhfiuerhofrehnkjgngnien",
+    "type": "first",
     "start": "2016-09-01"
   },
   {
     "title": "работает",
+    "type": "second",
     "start": "2016-09-07",
     "end": "2016-09-10"
+
   },
   {
     "id": 999,
     "title": "ну просто пиздец",
+    "type": "third",
     "start": "2016-09-09T16:00:00"
   },
   {
@@ -32,6 +36,7 @@
   {
     "title": "Json'а",
     "start": "2016-09-12T10:30:00",
+    "type": "fourth",
     "end": "2016-09-12T12:30:00"
   },
   {
