@@ -1,20 +1,22 @@
+
 <!DOCTYPE html>
 <html>
 <head>
+    <script type="text/javascript"> window.CSRF_TOKEN = "{{ csrf_token }}"; </script>
     <meta charset="UTF-8"/>
     <title>Calendar</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="node_modules/fullcalendar/dist/fullcalendar.css">
-    <link rel="stylesheet" href="jquery.datetimepicker.css">
-
-    <script src="node_modules/fullcalendar/node_modules/jquery/dist/jquery.js"></script>
-    <script src="node_modules/fullcalendar/node_modules/moment/moment.js"></script>
-    <script src="node_modules/fullcalendar/dist/fullcalendar.js"></script>
-    <script src="node_modules/fullcalendar/dist/locale/ru.js"></script>
+    <link rel="stylesheet" href="static/node_modules/fullcalendar/dist/fullcalendar.css">
+    <link rel="stylesheet" href="static/jquery.datetimepicker.css">
+    <script src="static/moment.min.js"></script>
+    <script src="static/node_modules/fullcalendar/node_modules/jquery/dist/jquery.js"></script>
+    <script src="static/node_modules/fullcalendar/node_modules/moment/moment.js"></script>
+    <script src="static/node_modules/fullcalendar/dist/fullcalendar.js"></script>
+    <script src="static/node_modules/fullcalendar/dist/locale/ru.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="jquery.datetimepicker.full.min.js"></script>
+    <script src="static/jquery.datetimepicker.full.min.js"></script>1
 
-    <script src="calendar.js"></script>
+    <script src="../static/calendar.js"></script>
 
     <style>
 
@@ -38,7 +40,7 @@
 </head>
 <body>
 
-
+{% csrf_token %}
 
 <div id='calendar'></div>
 
@@ -92,10 +94,10 @@
             </div>
             <div class="modal-body">
                 <label for="eventTitle">Название</label>
-                <input type="text" class="form-control" id="newEventTitle">
+                <input type="text" class="form-control" id="newEventTitle" required>
 
                 <label style="margin-top: 5px">Тип события</label>
-                <select class="form-control" id="newEventType">
+                <select required class="form-control" id="newEventType">
                     <option value="">Выберите тип</option>
                     <option value="first">Первый</option>
                     <option value="second">Второй</option>

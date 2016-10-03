@@ -1,7 +1,32 @@
 var events;
+
+$.ajaxSetup({
+     beforeSend: function(xhr, settings) {
+         function getCookie(name) {
+             var cookieValue = null;
+             if (document.cookie && document.cookie != '') {
+                 var cookies = document.cookie.split(';');
+                 for (var i = 0; i < cookies.length; i++) {
+                     var cookie = jQuery.trim(cookies[i]);
+                     // Does this cookie string begin with the name we want?
+                     if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                         break;
+                     }
+                 }
+             }
+             return cookieValue;
+         }
+         if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+             // Only send the token to relative URLs i.e. locally.
+             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+         }
+     }
+});
+
 $.ajax({
     type: 'POST',
-    url: 'events.json',
+    url: '/get/',
     dataType: 'json',
     cache: false,
     success: function (data) {
@@ -14,7 +39,6 @@ $.ajax({
 });
 
 $.datetimepicker.setLocale('ru');
-
 
 $(document).ready(function () {
 
@@ -37,15 +61,16 @@ $(document).ready(function () {
 
             $.ajax({
                 type: 'POST',
-                url: 'events.json', //fixme: get events
+                url: '/get/', //fixme: get events
                 dataType: 'json',
                 cache: false,
                 data: {
-                    start: new Date(view.start),
-                    end: new Date(view.end)
+                    start: moment(view.start).format("YYYY-MM-DD"),
+                    end: moment(view.end).format("YYYY-MM-DD")
                 },
                 success: function (data) {
-                    events = data;
+                    console.log(data);
+                    events = data.content;
                     $('#calendar').fullCalendar('removeEvents');
                     $('#calendar').fullCalendar('addEventSource', events);
                     $('#calendar').fullCalendar('refetchEvents');
@@ -81,20 +106,20 @@ $(document).ready(function () {
 
 var onCreateClick = function () {
     $("#modalForCreate").modal('show');
-    $('#newEventStart').datetimepicker();
-    $('#newEventEnd').datetimepicker();
+    $('#newEventStart').datetimepicker({format:'d.m.Y H:i'});
+    $('#newEventEnd').datetimepicker({format:'d.m.Y H:i'});
 
     $('#createEvent').click(function () {
 
 
         $.ajax({
             type: 'POST',
-            url: 'create/url', //fixme: create url
+            url: 'add/', //fixme: create url
             data: {
                 title: $('#newEventTitle').val(),
                 type: $("#newEventType option:selected").val(),
-                start: $('#newEventStart').datetimepicker('getValue'),
-                end: $('#newEventEnd').datetimepicker('getValue')
+                start: moment($('#newEventStart').datetimepicker('getValue')).format("YYYY-MM-DD HH:MM:SS"),
+                end: moment($('#newEventStart').datetimepicker('getValue')).format("YYYY-MM-DD HH:MM:SS")
             },
             cache: false,
             success: function (data) {
