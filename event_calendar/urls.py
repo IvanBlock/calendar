@@ -21,5 +21,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', start, name='get'),
     url(r'^get/', get, name='whatever'),
-    url(r'^add/', add, name='whatever2')
+    url(r'^add/', add, name='whatever2'),
+    url(r'^delete/', delete, name='whatever3'),
+    url(r'^update/', update, name='whatever4')
 ]

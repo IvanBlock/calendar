@@ -38,14 +38,21 @@ def get(request):
 
 @ajax
 def delete(request):
-    #TODO
-    pass
+    id_to_delete = request.POST['id']
+    event = Event.objects.all().filter(id=id_to_delete).first()
+    event.delete()
+
 
 
 @ajax
-def edit(request):
-    #TODO
-    pass
+def update(request):
+    id_to_update = request.POST['id']
+    event = Event.objects.all().filter(id=id_to_update).first()
+    event.start = datetime.strptime(request.POST['start'], '%Y-%m-%d %H:%M:%S')
+    event.end = datetime.strptime(request.POST['end'], '%Y-%m-%d %H:%M:%S')
+    event.type = request.POST['type']
+    event.name = request.POST['title']
+    event.save()
 
 
 @ajax

@@ -119,7 +119,7 @@ var onCreateClick = function () {
                 title: $('#newEventTitle').val(),
                 type: $("#newEventType option:selected").val(),
                 start: moment($('#newEventStart').datetimepicker('getValue')).format("YYYY-MM-DD HH:MM:SS"),
-                end: moment($('#newEventStart').datetimepicker('getValue')).format("YYYY-MM-DD HH:MM:SS")
+                end: moment($('#newEventEnd').datetimepicker('getValue')).format("YYYY-MM-DD HH:MM:SS")
             },
             cache: false,
             success: function (data) {
@@ -141,7 +141,7 @@ var onEventClick = function (event, element) {
 
         $.ajax({
             type: 'POST',
-            url: 'delete/url', //fixme: delete url
+            url: 'delete/', //fixme: delete url
             data: {id: event.id},
             cache: false,
             success: function (data) {
@@ -195,9 +195,10 @@ var onEventClick = function (event, element) {
                 url: 'update/url', //fixme: update url
                 data: {
                     id: event.id,
-                    startEvent: $('#eventStart').datetimepicker('getValue'),
-                    typeEvent: $("#eventType option:selected").val(),
-                    endEvent: $('#eventEnd').datetimepicker('getValue')
+                    start: moment($('#eventStart').datetimepicker('getValue')).format("YYYY-MM-DD HH:MM:SS"),
+                    end: moment($('#eventEnd').datetimepicker('getValue')).format("YYYY-MM-DD HH:MM:SS"),
+                    type: $("#eventType option:selected").val(),
+                    title: $('#eventTitle').val()
                 },
                 cache: false,
                 success: function (data) {
