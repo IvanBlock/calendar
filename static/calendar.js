@@ -1,41 +1,26 @@
-var events;
-
 $.ajaxSetup({
-     beforeSend: function(xhr, settings) {
-         function getCookie(name) {
-             var cookieValue = null;
-             if (document.cookie && document.cookie != '') {
-                 var cookies = document.cookie.split(';');
-                 for (var i = 0; i < cookies.length; i++) {
-                     var cookie = jQuery.trim(cookies[i]);
-                     // Does this cookie string begin with the name we want?
-                     if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                         break;
-                     }
-                 }
-             }
-             return cookieValue;
-         }
-         if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
-             // Only send the token to relative URLs i.e. locally.
-             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-         }
-     }
-});
+    beforeSend: function (xhr, settings) {
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
 
-$.ajax({
-    type: 'POST',
-    url: '/get/',
-    dataType: 'json',
-    cache: false,
-    success: function (data) {
-        events = data;
-        $('#calendar').fullCalendar('refetchEvents');
-    }.bind(this),
-    error: function () {
-        console.log("Ошибка получения данных")
-    }.bind(this)
+        if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+            // Only send the token to relative URLs i.e. locally.
+            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+        }
+    }
 });
 
 $.datetimepicker.setLocale('ru');
@@ -56,28 +41,18 @@ $(document).ready(function () {
         navLinks: true,
         editable: true,
         eventLimit: true,
-        events: events,
-        viewRender: function (view, element) {
-
+        events: function (start, end, timezone, callback) {
             $.ajax({
                 type: 'POST',
-                url: '/get/', //fixme: get events
+                url: '/get/',
                 dataType: 'json',
-                cache: false,
                 data: {
-                    start: moment(view.start).format("YYYY-MM-DD"),
-                    end: moment(view.end).format("YYYY-MM-DD")
+                    start: moment(start).format("YYYY-MM-DD"),
+                    end: moment(end).format("YYYY-MM-DD")
                 },
                 success: function (data) {
-                    console.log(data);
-                    events = data.content;
-                    $('#calendar').fullCalendar('removeEvents');
-                    $('#calendar').fullCalendar('addEventSource', events);
-                    $('#calendar').fullCalendar('refetchEvents');
-                }.bind(this),
-                error: function () {
-                    console.log("Ошибка получения данных")
-                }.bind(this)
+                    callback(data.content);
+                }
             });
         },
         eventRender: function (event, element) {
@@ -94,20 +69,12 @@ $(document).ready(function () {
         eventClick: onEventClick
     });
 
-    /*$('button.fc-prev-button').click(function () {
-        console.log($('#calendar').fullCalendar('getDate').format('MM'));
-    });
-
-    $('button.fc-next-button').click(function () {
-        console.log($('#calendar').fullCalendar('getDate').format('MM'));
-    });*/
-
 });
 
 var onCreateClick = function () {
     $("#modalForCreate").modal('show');
-    $('#newEventStart').datetimepicker({format:'d.m.Y H:i'});
-    $('#newEventEnd').datetimepicker({format:'d.m.Y H:i'});
+    $('#newEventStart').datetimepicker({format: 'd.m.Y H:i'});
+    $('#newEventEnd').datetimepicker({format: 'd.m.Y H:i'});
 
     $('#createEvent').click(function () {
 
@@ -124,12 +91,13 @@ var onCreateClick = function () {
             cache: false,
             success: function (data) {
                 $('#calendar').fullCalendar('refetchEvents');
-
             }.bind(this),
             error: function () {
                 console.log("Ошибка при попытке создания")
             }.bind(this)
         });
+
+        $("#modalForCreate").modal('hide');
 
     })
 };
