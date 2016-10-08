@@ -22,7 +22,7 @@ def get(request):
     """
     view_start = datetime.strptime(request.POST['start'], '%Y-%m-%d')
     view_end = datetime.strptime(request.POST['end'], '%Y-%m-%d')
-    events = Event.objects.all().filter(start__range=[view_start, view_end])
+    events = Event.objects.all().filter(start__gte=view_start)
     output = []
     for event in events:
         single_output = {}
