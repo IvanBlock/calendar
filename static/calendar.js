@@ -81,7 +81,7 @@ var onCreateClick = function () {
 
         $.ajax({
             type: 'POST',
-            url: 'add/', //fixme: create url
+            url: 'add/',
             data: {
                 title: $('#newEventTitle').val(),
                 type: $("#newEventType option:selected").val(),
@@ -109,7 +109,7 @@ var onEventClick = function (event, element) {
 
         $.ajax({
             type: 'POST',
-            url: 'delete/', //fixme: delete url
+            url: 'delete/',
             data: {id: event.id},
             cache: false,
             success: function (data) {
@@ -160,7 +160,7 @@ var onEventClick = function (event, element) {
 
             $.ajax({
                 type: 'POST',
-                url: 'update/url', //fixme: update url
+                url: 'update/url',
                 data: {
                     id: event.id,
                     start: moment($('#eventStart').datetimepicker('getValue')).format("YYYY-MM-DD HH:MM:SS"),
