@@ -73,6 +73,14 @@ $(document).ready(function () {
 
 var onCreateClick = function () {
     $("#modalForCreate").modal('show');
+    $('#days').hide();
+    $('#repeatType').change(function () {
+        if ($('#repeatType option:selected').val() == 'week') {
+            $('#days').show();
+        } else {
+            $('#days').hide();
+        }
+    });
     $('#newEventStart').datetimepicker({format: 'd.m.Y H:i'});
     $('#newEventEnd').datetimepicker({format: 'd.m.Y H:i'});
 
