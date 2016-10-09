@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,19 +58,27 @@
                 <input type="text" class="form-control" id="eventTitle">
 
                 <label style="margin-top: 5px">Тип события</label>
-                    <select class="form-control" id="eventType">
-                        <option value="">Выберите тип</option>
-                        <option value="first">Первый</option>
-                        <option value="second">Второй</option>
-                        <option value="third">Третий</option>
-                        <option value="fourth">Четвертый</option>
-                    </select>
+                <select class="form-control" id="eventType">
+                    <option value="">Выберите тип</option>
+                    <option value="first">Первый</option>
+                    <option value="second">Второй</option>
+                    <option value="third">Третий</option>
+                    <option value="fourth">Четвертый</option>
+                </select>
+
+                <label style="margin-top: 5px">Повторять</label>
+                <select class="form-control" id="eventType">
+                    <option value="">Выберите тип</option>
+                    <option value="week">Раз в неделю</option>
+                    <option value="month">Раз в месяц</option>
+                    <option value="year">Раз в год</option>
+                </select>
 
                 <label for="eventStart" style="margin-top: 5px">Начало события</label>
-                <input type="text" class="form-control"  id="eventStart"/>
+                <input type="text" class="form-control" id="eventStart"/>
 
                 <label for="eventEnd" style="margin-top: 5px">Конец события</label>
-                <input type="text" class="form-control"  id="eventEnd"/>
+                <input type="text" class="form-control" id="eventEnd"/>
                 <div class="row">
 
                 </div>
@@ -105,11 +112,30 @@
                     <option value="fourth">Четвертый</option>
                 </select>
 
+                <label style="margin-top: 5px">Повторять</label>
+                <select class="form-control" id="repeatType">
+                    <option value="">Выберите тип</option>
+                    <option value="week">Раз в неделю</option>
+                    <option value="month">Раз в месяц</option>
+                    <option value="year">Раз в год</option>
+                </select>
+
+                <label style="margin-top: 5px">Выберите дни</label>
+                <select class="form-control" id="days" multiple>
+                    <option value=1>Понедельник</option>
+                    <option value=2>Вторник</option>
+                    <option value=3>Среда</option>
+                    <option value=4>Четверг</option>
+                    <option value=5>Пятница</option>
+                    <option value=6>Суббота</option>
+                    <option value=0>Воскресенье</option>
+                </select>
+
                 <label for="eventStart" style="margin-top: 5px">Начало события</label>
-                <input type="text" class="form-control"  id="newEventStart"/>
+                <input type="text" class="form-control" id="newEventStart"/>
 
                 <label for="eventEnd" style="margin-top: 5px">Конец события</label>
-                <input type="text" class="form-control"  id="newEventEnd"/>
+                <input type="text" class="form-control" id="newEventEnd"/>
                 <div class="row">
 
                 </div>

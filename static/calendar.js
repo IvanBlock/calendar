@@ -78,6 +78,11 @@ var onCreateClick = function () {
 
     $('#createEvent').click(function () {
 
+        var dow = [];
+
+        $("#days :selected").each(function (i, selected) {
+            dow.push($(selected).val());
+        });
 
         $.ajax({
             type: 'POST',
@@ -85,6 +90,7 @@ var onCreateClick = function () {
             data: {
                 title: $('#newEventTitle').val(),
                 type: $("#newEventType option:selected").val(),
+                dow: dow,
                 start: moment($('#newEventStart').datetimepicker('getValue')).format("YYYY-MM-DD HH:MM:SS"),
                 end: moment($('#newEventEnd').datetimepicker('getValue')).format("YYYY-MM-DD HH:MM:SS")
             },
