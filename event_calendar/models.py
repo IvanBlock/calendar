@@ -7,3 +7,10 @@ class Event(models.Model):
     event_type = models.CharField(max_length=20, verbose_name='Тип события')
     start = models.DateTimeField(verbose_name='Начало события')
     end = models.DateTimeField(null=True, blank=True, verbose_name="Конец события")
+
+
+type_tuple = (('first', 'Тип1'),
+    ('second', 'Тип2'),
+    ('third', 'Тип3'),
+    ('forth', 'Тип4')
+              )

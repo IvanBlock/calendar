@@ -50,7 +50,7 @@ def update(request):
     event = Event.objects.all().filter(id=id_to_update).first()
     event.start = datetime.strptime(request.POST['start'], '%Y-%m-%d %H:%M:%S')
     event.end = datetime.strptime(request.POST['end'], '%Y-%m-%d %H:%M:%S')
-    event.type = request.POST['type']
+    event.event_type  = request.POST['type']
     event.name = request.POST['title']
     event.save()
 
