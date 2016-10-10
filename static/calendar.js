@@ -98,7 +98,7 @@ var onCreateClick = function () {
             data: {
                 title: $('#newEventTitle').val(),
                 type: $("#newEventType option:selected").val(),
-                dow: dow,
+                dow: JSON.stringify(dow),
                 start: moment($('#newEventStart').datetimepicker('getValue')).format("YYYY-MM-DD HH:MM:SS"),
                 end: moment($('#newEventEnd').datetimepicker('getValue')).format("YYYY-MM-DD HH:MM:SS")
             },

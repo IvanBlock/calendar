@@ -14,6 +14,7 @@ def start(request):
 
 @ajax
 def get(request):
+    # FIXME (probably the problem is in view)
     """
     :param request: Takes a request with 2 dates in post, 1 in the start of the calendar view
     (month, week, day), another at the end. Filters event objects with range of those date by
@@ -22,35 +23,46 @@ def get(request):
     """
     view_start = datetime.strptime(request.POST['start'], '%Y-%m-%d')
     view_end = datetime.strptime(request.POST['end'], '%Y-%m-%d')
-    events = Event.objects.all().filter(start__gte=view_start)
+    events = Event.objects.all().filter(start__gte=view_start, end__lte=view_end)
     output = []
     for event in events:
-        single_output = {}
+        single_output = dict()
         single_output['id'] = event.id
         single_output['title'] = event.name
         single_output['type'] = event.event_type
         single_output['start'] = event.start.strftime('%Y-%m-%dT%H:%M:%S')
         if event.end:
             single_output['end'] = event.end.strftime('%Y-%m-%dT%H:%M:%S')
+        if event.days_to_repeat:
+            single_output['dow'] = event.days_to_repeat
         output.append(single_output)
     return output
 
 
 @ajax
 def delete(request):
+    """
+    :param request: deletes an event based on id from
+    """
     id_to_delete = request.POST['id']
     event = Event.objects.all().filter(id=id_to_delete).first()
     event.delete()
 
 
-
 @ajax
 def update(request):
+    """
+    :param request: Takes a request with 2 dates in post, 1 in the start of the calendar view
+    (month, week, day), another at the end, new name and new type from form if they were submitted
+    """
     id_to_update = request.POST['id']
     event = Event.objects.all().filter(id=id_to_update).first()
     event.start = datetime.strptime(request.POST['start'], '%Y-%m-%d %H:%M:%S')
-    event.end = datetime.strptime(request.POST['end'], '%Y-%m-%d %H:%M:%S')
-    event.event_type  = request.POST['type']
+    if request.POST['end']:
+        event.end = datetime.strptime(request.POST['end'], '%Y-%m-%d %H:%M:%S')
+    else:
+        event.end = event.start
+    event.event_type = request.POST['type']
     event.name = request.POST['title']
     event.save()
 
@@ -65,6 +77,8 @@ def add(request):
     event.name = request.POST['title']
     event.event_type = request.POST['type']
     event.start = datetime.strptime(request.POST['start'], '%Y-%m-%d %H:%M:%S')
+    if len(request.POST['dow']) > 2:
+        event.days_to_repeat = str(request.POST['dow'])
     if request.POST['end']:
         event.end = datetime.strptime(request.POST['end'], '%Y-%m-%d %H:%M:%S')
     else:
