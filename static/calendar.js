@@ -51,6 +51,7 @@ $(document).ready(function () {
                     end: moment(end).format("YYYY-MM-DD")
                 },
                 success: function (data) {
+                    console.log(data)
                     callback(data.content);
                 }
             });
@@ -98,6 +99,7 @@ var onCreateClick = function () {
             data: {
                 title: $('#newEventTitle').val(),
                 type: $("#newEventType option:selected").val(),
+                repeat_type: $("#repeatType option:selected").val(),
                 dow: JSON.stringify(dow),
                 start: moment($('#newEventStart').datetimepicker('getValue')).format("YYYY-MM-DD HH:MM:SS"),
                 end: moment($('#newEventEnd').datetimepicker('getValue')).format("YYYY-MM-DD HH:MM:SS")
