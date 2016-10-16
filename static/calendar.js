@@ -259,7 +259,7 @@ var onEventClick = function (event, element) {
 
 
     $('#periodStart').datetimepicker({
-        value: event.periodStart.format('YYYY MM DD'),
+        value: event.periodStart != null ? event.periodStart.format('YYYY MM DD') : null,
         timepicker: false,
         onShow: function (ct) {
             this.setOptions({
@@ -269,7 +269,7 @@ var onEventClick = function (event, element) {
     });
 
     $('#periodEnd').datetimepicker({
-        value: event.periodEnd.format('YYYY MM DD'),
+        value: event.periodEnd != null ? event.periodEnd.format('YYYY MM DD') : null,
         timepicker: false,
         onShow: function (ct) {
             this.setOptions({
