@@ -196,7 +196,7 @@ $(document).ready(function () {
             data: {
                 title: $('#newEventTitle').val(),
                 type: $("#newEventType option:selected").val(),
-                repeat_type: $("#repeatType option:selected").val(),
+                repeat: repeat,
                 dow: JSON.stringify(dow),
                 start: moment($('#newEventStart').datetimepicker('getValue')).format("YYYY-MM-DD HH:MM:SS"),
                 end: moment($('#newEventEnd').datetimepicker('getValue')).format("YYYY-MM-DD HH:MM:SS")
@@ -209,9 +209,7 @@ $(document).ready(function () {
                 console.log("Ошибка при попытке создания")
             }.bind(this)
         });
-
     });
-
 })
 ;
 
@@ -257,7 +255,6 @@ var onEventClick = function (event, element) {
         }
     });
 
-
     $('#periodStart').datetimepicker({
         value: event.periodStart != null ? event.periodStart.format('YYYY MM DD') : null,
         timepicker: false,
@@ -291,6 +288,8 @@ var onEventClick = function (event, element) {
                     id: event.id,
                     start: moment($('#eventStart').datetimepicker('getValue')).format("YYYY-MM-DD HH:MM:SS"),
                     end: moment($('#eventEnd').datetimepicker('getValue')).format("YYYY-MM-DD HH:MM:SS"),
+                    periodStart: moment($('#periodStart').datetimepicker('getValue')).format("YYYY-MM-DD HH:MM:SS"),
+                    periodEnd: moment($('#periodEnd').datetimepicker('getValue')).format("YYYY-MM-DD HH:MM:SS"),
                     type: $("#eventType option:selected").val(),
                     title: $('#eventTitle').val()
                 },
