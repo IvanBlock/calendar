@@ -71,65 +71,65 @@ $(document).ready(function () {
 
     $('#newPeriodStart').hide();
     $('#newPeriodEnd').hide();
-    $('#labelPeriodEnd').hide();
-    $('#labelPeriodStart').hide();
+    $('#newLabelPeriodEnd').hide();
+    $('#newLabelPeriodStart').hide();
 
-    $('#labelYearStart').hide();
-    $('#yearStart').hide();
-    $('#labelYearEnd').hide();
-    $('#yearEnd').hide();
+    $('#newLabelYearStart').hide();
+    $('#newYearStart').hide();
+    $('#newLabelYearEnd').hide();
+    $('#newYearEnd').hide();
 
     $('#repeatType').change(function () {
         if ($('#repeatType option:selected').val() == 'week') {
             $('#days').show();
             $('#labelDays').show();
 
-            $('#labelYearStart').hide();
-            $('#yearStart').hide();
-            $('#labelYearEnd').hide();
-            $('#yearEnd').hide();
+            $('#newLabelYearStart').hide();
+            $('#newYearStart').hide();
+            $('#newLabelYearEnd').hide();
+            $('#newYearEnd').hide();
 
             $('#newPeriodStart').hide();
             $('#newPeriodEnd').hide();
-            $('#labelPeriodEnd').hide();
-            $('#labelPeriodStart').hide();
+            $('#newLabelPeriodEnd').hide();
+            $('#newLabelPeriodStart').hide();
         } else if ($('#repeatType option:selected').val() == 'month') {
 
             $('#newPeriodStart').show();
             $('#newPeriodEnd').show();
-            $('#labelPeriodEnd').show();
-            $('#labelPeriodStart').show();
+            $('#newLabelPeriodEnd').show();
+            $('#newLabelPeriodStart').show();
 
-            $('#labelYearStart').hide();
-            $('#yearStart').hide();
-            $('#labelYearEnd').hide();
-            $('#yearEnd').hide();
+            $('#newLabelYearStart').hide();
+            $('#newYearStart').hide();
+            $('#newLabelYearEnd').hide();
+            $('#newYearEnd').hide();
 
             $('#days').hide();
             $('#labelDays').hide();
         } else if ($('#repeatType option:selected').val() == 'year') {
 
-            $('#labelYearStart').show();
-            $('#yearStart').show();
-            $('#labelYearEnd').show();
-            $('#yearEnd').show();
+            $('#newLabelYearStart').show();
+            $('#newYearStart').show();
+            $('#newLabelYearEnd').show();
+            $('#newYearEnd').show();
 
             $('#newPeriodStart').hide();
             $('#newPeriodEnd').hide();
-            $('#labelPeriodEnd').hide();
-            $('#labelPeriodStart').hide();
+            $('#newLabelPeriodEnd').hide();
+            $('#newLabelPeriodStart').hide();
             $('#days').hide();
             $('#labelDays').hide();
         } else {
 
-            $('#labelYearStart').hide();
-            $('#yearStart').hide();
-            $('#labelYearEnd').hide();
-            $('#yearEnd').hide();
+            $('#newLabelYearStart').hide();
+            $('#newYearStart').hide();
+            $('#newLabelYearEnd').hide();
+            $('#newYearEnd').hide();
             $('#newPeriodStart').hide();
             $('#newPeriodEnd').hide();
-            $('#labelPeriodEnd').hide();
-            $('#labelPeriodStart').hide();
+            $('#newLabelPeriodEnd').hide();
+            $('#newLabelPeriodStart').hide();
             $('#days').hide();
             $('#labelDays').hide();
         }
@@ -185,8 +185,8 @@ $(document).ready(function () {
                 repeat.periodStart = moment($('#newPeriodStart').datetimepicker('getValue')).format("YYYY-MM-DD");
                 repeat.periodEnd = moment($('#newPeriodEnd').datetimepicker('getValue')).format("YYYY-MM-DD");
             } else if (repeat.type == 'year') {
-                repeat.periodStart = $("#yearStart option:selected").val();
-                repeat.periodEnd = $("#yearEnd option:selected").val();
+                repeat.periodStart = $("#newYearStart option:selected").val();
+                repeat.periodEnd = $("#newYearEnd option:selected").val();
             }
         }
 
@@ -216,24 +216,58 @@ $(document).ready(function () {
 
 var onEventClick = function (event, element) {
 
-    $("#delete").click(function () {
+    if (event.repeat_type == undefined) {
+        $('#labelYearStart').hide();
+        $('#yearStart').hide();
+        $('#labelYearEnd').hide();
+        $('#yearEnd').hide();
 
-        $.ajax({
-            type: 'POST',
-            url: 'delete/',
-            data: {id: event.id},
-            cache: false,
-            success: function (data) {
-                $('#calendar').fullCalendar('refetchEvents');
+        $('#labelPeriodStart').hide();
+        $('#labelPeriodEnd').hide();
+        $('#d').hide();
 
-            }.bind(this),
-            error: function () {
-                console.log("Ошибка при попытке удаления")
-            }.bind(this)
-        });
+        $('#periodStart').hide();
+        $('#periodEnd').hide();
+    } else if (event.repeat_type == 'week') {
 
-        $("#myModal").modal('hide');
-    });
+        $('#d').val(event.dow);
+        $('#d').show();
+
+        $('#labelYearStart').hide();
+        $('#yearStart').hide();
+        $('#labelYearEnd').hide();
+        $('#yearEnd').hide();
+        $('#labelPeriodStart').hide();
+        $('#labelPeriodEnd').hide();
+        $('#periodStart').hide();
+        $('#periodEnd').hide();
+    } else if(event.repeat_type == 'month'){
+        $('#labelYearStart').hide();
+        $('#yearStart').hide();
+        $('#labelYearEnd').hide();
+        $('#yearEnd').hide();
+
+        $('#labelPeriodStart').hide();
+        $('#labelPeriodEnd').hide();
+        $('#d').hide();
+
+        $('#periodStart').show();
+        $('#periodEnd').show();
+    } else if(event.repeat_type == 'year'){
+        $('#labelYearStart').show();
+        $('#yearStart').show();
+        $('#labelYearEnd').show();
+        $('#yearEnd').show();
+        $('#yearStart').val(event.startYear);
+        $('#yearEnd').val(event.endYear);
+
+        $('#labelPeriodStart').hide();
+        $('#labelPeriodEnd').hide();
+        $('#d').hide();
+
+        $('#periodStart').hide();
+        $('#periodEnd').hide();
+    }
 
     $("#eventTitle").val(event.title);
 
@@ -277,6 +311,26 @@ var onEventClick = function (event, element) {
 
     $("#update").click(function () {
 
+        var dow = [];
+
+        $("#d :selected").each(function (i, selected) {
+            dow.push($(selected).val());
+        });
+
+
+        var repeat = new Object();
+        repeat.type = event.repeat_type;
+        if (event.repeat_type) {
+            event.repeat_type == 'week' ? repeat.dow = JSON.stringify(dow) : null;
+            if (event.repeat_type == 'month') {
+                repeat.periodStart = moment($('#periodStart').datetimepicker('getValue')).format("YYYY-MM-DD");
+                repeat.periodEnd = moment($('#periodEnd').datetimepicker('getValue')).format("YYYY-MM-DD");
+            } else if (event.repeat_type == 'year') {
+                repeat.periodStart = $("#yearStart option:selected").val();
+                repeat.periodEnd = $("#yearEnd option:selected").val();
+            }
+        }
+
         if ($('#eventStart').datetimepicker('getValue') > $('#eventEnd').datetimepicker('getValue')) {
             alert("Дата начала не может быть больше даты конца");
         } else {
@@ -288,8 +342,7 @@ var onEventClick = function (event, element) {
                     id: event.id,
                     start: moment($('#eventStart').datetimepicker('getValue')).format("YYYY-MM-DD HH:MM:SS"),
                     end: moment($('#eventEnd').datetimepicker('getValue')).format("YYYY-MM-DD HH:MM:SS"),
-                    periodStart: moment($('#periodStart').datetimepicker('getValue')).format("YYYY-MM-DD HH:MM:SS"),
-                    periodEnd: moment($('#periodEnd').datetimepicker('getValue')).format("YYYY-MM-DD HH:MM:SS"),
+                    repeat: repeat,
                     type: $("#eventType option:selected").val(),
                     title: $('#eventTitle').val()
                 },
@@ -305,6 +358,25 @@ var onEventClick = function (event, element) {
 
             $("#myModal").modal('hide');
         }
+    });
+
+    $("#delete").click(function () {
+
+        $.ajax({
+            type: 'POST',
+            url: 'delete/',
+            data: {id: event.id},
+            cache: false,
+            success: function (data) {
+                $('#calendar').fullCalendar('refetchEvents');
+
+            }.bind(this),
+            error: function () {
+                console.log("Ошибка при попытке удаления")
+            }.bind(this)
+        });
+
+        $("#myModal").modal('hide');
     });
 
     $("#myModal").modal('show');
