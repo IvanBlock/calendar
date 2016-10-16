@@ -185,8 +185,8 @@ $(document).ready(function () {
                 repeat.periodStart = moment($('#newPeriodStart').datetimepicker('getValue')).format("YYYY-MM-DD");
                 repeat.periodEnd = moment($('#newPeriodEnd').datetimepicker('getValue')).format("YYYY-MM-DD");
             } else if (repeat.type == 'year') {
-                repeat.periodStart = moment(new Date($("#yearStart option:selected").val(), 0)).format("YYYY-MM-DD");
-                repeat.periodEnd = moment(new Date($("#yearEnd option:selected").val(), 0)).format("YYYY-MM-DD");
+                repeat.periodStart = $("#yearStart option:selected").val();
+                repeat.periodEnd = $("#yearEnd option:selected").val();
             }
         }
 
