@@ -27,9 +27,6 @@ $.datetimepicker.setLocale('ru');
 
 $(document).ready(function () {
 
-    $("#create").click(onCreateClick);
-
-
     $('#calendar').fullCalendar({
         lang: 'ru',
         header: {
@@ -51,7 +48,6 @@ $(document).ready(function () {
                     end: moment(end).format("YYYY-MM-DD")
                 },
                 success: function (data) {
-                    console.log(data)
                     callback(data.content);
                 }
             });
@@ -70,20 +66,108 @@ $(document).ready(function () {
         eventClick: onEventClick
     });
 
-});
-
-var onCreateClick = function () {
-    $("#modalForCreate").modal('show');
     $('#days').hide();
+    $('#labelDays').hide();
+
+    $('#newPeriodStart').hide();
+    $('#newPeriodEnd').hide();
+    $('#labelPeriodEnd').hide();
+    $('#labelPeriodStart').hide();
+
+    $('#labelYearStart').hide();
+    $('#yearStart').hide();
+    $('#labelYearEnd').hide();
+    $('#yearEnd').hide();
+
     $('#repeatType').change(function () {
         if ($('#repeatType option:selected').val() == 'week') {
             $('#days').show();
-        } else {
+            $('#labelDays').show();
+
+            $('#labelYearStart').hide();
+            $('#yearStart').hide();
+            $('#labelYearEnd').hide();
+            $('#yearEnd').hide();
+
+            $('#newPeriodStart').hide();
+            $('#newPeriodEnd').hide();
+            $('#labelPeriodEnd').hide();
+            $('#labelPeriodStart').hide();
+        } else if ($('#repeatType option:selected').val() == 'month') {
+
+            $('#newPeriodStart').show();
+            $('#newPeriodEnd').show();
+            $('#labelPeriodEnd').show();
+            $('#labelPeriodStart').show();
+
+            $('#labelYearStart').hide();
+            $('#yearStart').hide();
+            $('#labelYearEnd').hide();
+            $('#yearEnd').hide();
+
             $('#days').hide();
+            $('#labelDays').hide();
+        } else if ($('#repeatType option:selected').val() == 'year') {
+
+            $('#labelYearStart').show();
+            $('#yearStart').show();
+            $('#labelYearEnd').show();
+            $('#yearEnd').show();
+
+            $('#newPeriodStart').hide();
+            $('#newPeriodEnd').hide();
+            $('#labelPeriodEnd').hide();
+            $('#labelPeriodStart').hide();
+            $('#days').hide();
+            $('#labelDays').hide();
+        } else {
+
+            $('#labelYearStart').hide();
+            $('#yearStart').hide();
+            $('#labelYearEnd').hide();
+            $('#yearEnd').hide();
+            $('#newPeriodStart').hide();
+            $('#newPeriodEnd').hide();
+            $('#labelPeriodEnd').hide();
+            $('#labelPeriodStart').hide();
+            $('#days').hide();
+            $('#labelDays').hide();
         }
     });
-    $('#newEventStart').datetimepicker({format: 'd.m.Y H:i'});
-    $('#newEventEnd').datetimepicker({format: 'd.m.Y H:i'});
+    $('#newEventStart').datetimepicker({
+        closeOnTimeSelect: true,
+        onShow: function (ct) {
+            this.setOptions({
+                maxDate: $('#newEventEnd').val() ? $('#newEventEnd').val() : false
+            })
+        }
+    });
+    $('#newEventEnd').datetimepicker({
+        onShow: function (ct) {
+            this.setOptions({
+                minDate: $('#newEventStart').val() ? $('#newEventStart').val() : false
+            })
+        }
+    });
+
+    $('#newPeriodStart').datetimepicker({
+        timepicker: false,
+        onShow: function (ct) {
+            this.setOptions({
+                maxDate: $('#newPeriodEnd').val() ? $('#newPeriodEnd').val() : false
+            })
+        }
+    });
+
+    $('#newPeriodEnd').datetimepicker({
+        timepicker: false,
+        onShow: function (ct) {
+            this.setOptions({
+                minDate: $('#newPeriodStart').val() ? $('#newPeriodStart').val() : false
+            })
+        }
+    });
+
 
     $('#createEvent').click(function () {
 
@@ -92,6 +176,19 @@ var onCreateClick = function () {
         $("#days :selected").each(function (i, selected) {
             dow.push($(selected).val());
         });
+
+        var repeat = new Object();
+        repeat.type = $("#repeatType option:selected").val();
+        if (repeat.type) {
+            repeat.type == 'week' ? repeat.dow = JSON.stringify(dow) : null;
+            if (repeat.type == 'month') {
+                repeat.periodStart = moment($('#newPeriodStart').datetimepicker('getValue')).format("YYYY-MM-DD");
+                repeat.periodEnd = moment($('#newPeriodEnd').datetimepicker('getValue')).format("YYYY-MM-DD");
+            } else if (repeat.type == 'year') {
+                repeat.periodStart = moment(new Date($("#yearStart option:selected").val(), 0)).format("YYYY-MM-DD");
+                repeat.periodEnd = moment(new Date($("#yearEnd option:selected").val(), 0)).format("YYYY-MM-DD");
+            }
+        }
 
         $.ajax({
             type: 'POST',
@@ -113,10 +210,10 @@ var onCreateClick = function () {
             }.bind(this)
         });
 
-        $("#modalForCreate").modal('hide');
+    });
 
-    })
-};
+})
+;
 
 
 var onEventClick = function (event, element) {
@@ -144,29 +241,42 @@ var onEventClick = function (event, element) {
 
     $('#eventStart').datetimepicker({
         value: event.start.format('YYYY MM DD HH:mm'),
-        minDate: 0,
-        onSelectDate: function (date) {
-            $('#eventEnd').datetimepicker('options', {minDate: date});
-        },
-        onSelectTime: function (time) {
-            console.log(time);
-            $('#eventEnd').datetimepicker('setOptions', {minTime: this.minDate == this.value ? time : null});
+        onShow: function (ct) {
+            this.setOptions({
+                maxDate: $('#eventEnd').val() ? $('#eventEnd').val() : false
+            })
         }
     });
-
-
-    var end = event.end;
 
     $('#eventEnd').datetimepicker({
         value: event.end == null ? null : event.end.format('YYYY MM DD HH:mm'),
-        onSelectDate: function (date) {
-            $('#eventStart').datetimepicker('setOptions', {maxDate: date, maxTime: date});
+        onShow: function (ct) {
+            this.setOptions({
+                minDate: $('#eventStart').val() ? $('#eventStart').val() : false
+            })
         }
     });
 
-    if (end == null) {
-        $('#eventEnd').datetimepicker('reset');
-    }
+
+    $('#periodStart').datetimepicker({
+        value: event.periodStart.format('YYYY MM DD'),
+        timepicker: false,
+        onShow: function (ct) {
+            this.setOptions({
+                maxDate: $('#periodEnd').val() ? $('#periodEnd').val() : false
+            })
+        }
+    });
+
+    $('#periodEnd').datetimepicker({
+        value: event.periodEnd.format('YYYY MM DD'),
+        timepicker: false,
+        onShow: function (ct) {
+            this.setOptions({
+                minDate: $('#periodStart').val() ? $('#periodStart').val() : false
+            })
+        }
+    });
 
     $("#update").click(function () {
 

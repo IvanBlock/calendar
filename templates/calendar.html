@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <script type="text/javascript"> window.CSRF_TOKEN = "{{ csrf_token }}"; </script>
     <meta charset="UTF-8"/>
     <title>Calendar</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="static/node_modules/fullcalendar/dist/fullcalendar.css">
     <link rel="stylesheet" href="static/jquery.datetimepicker.css">
+    <link rel="stylesheet" href="static/normalize.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="static/moment.min.js"></script>
     <script src="static/node_modules/fullcalendar/node_modules/jquery/dist/jquery.js"></script>
     <script src="static/node_modules/fullcalendar/node_modules/moment/moment.js"></script>
@@ -20,14 +21,14 @@
     <style>
 
         body {
-            margin: 40px 10px;
+            margin: 40px 0px;
             padding: 0;
             font-family: "Lucida Grande", Helvetica, Arial, Verdana, sans-serif;
             font-size: 14px;
         }
 
         #calendar {
-            max-width: 900px;
+            width: 85%;
             margin: 0 auto;
         }
 
@@ -41,7 +42,87 @@
 
 {% csrf_token %}
 
-<div id='calendar'></div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-9">
+            <div id='calendar'></div>
+        </div>
+        <div class="col-md-3">
+            <div class="sidebar-nav">
+                <div class="well">
+                    <label for="eventTitle">Название</label>
+                    <input type="text" class="form-control" id="newEventTitle">
+
+                    <label style="margin-top: 5px">Тип события</label>
+                    <select required class="form-control" id="newEventType">
+                        <option value="">Выберите тип</option>
+                        <option value="first">Первый</option>
+                        <option value="second">Второй</option>
+                        <option value="third">Третий</option>
+                        <option value="fourth">Четвертый</option>
+                    </select>
+
+                    <label style="margin-top: 5px">Повторять</label>
+                    <select class="form-control" id="repeatType">
+                        <option value="">Выберите тип</option>
+                        <option value="week">Раз в неделю</option>
+                        <option value="month">Раз в месяц</option>
+                        <option value="year">Раз в год</option>
+                    </select>
+
+                    <label style="margin-top: 5px" id="labelDays">Выберите дни</label>
+                    <select class="form-control" id="days" multiple>
+                        <option value=1>Понедельник</option>
+                        <option value=2>Вторник</option>
+                        <option value=3>Среда</option>
+                        <option value=4>Четверг</option>
+                        <option value=5>Пятница</option>
+                        <option value=6>Суббота</option>
+                        <option value=0>Воскресенье</option>
+                    </select>
+
+                    <label for="eventStart" style="margin-top: 5px">Начало события</label>
+                    <input type="text" class="form-control" id="newEventStart"/>
+
+                    <label for="eventEnd" style="margin-top: 5px">Конец события</label>
+                    <input type="text" class="form-control" id="newEventEnd"/>
+
+                    <label for="newPeriodStart" style="margin-top: 5px" id="labelPeriodEnd">Начало периода</label>
+                    <input type="text" class="form-control" id="newPeriodStart"/>
+
+                    <label for="newPeriodEnd" style="margin-top: 5px" id="labelPeriodStart">Конец периода</label>
+                    <input type="text" class="form-control" id="newPeriodEnd"/>
+
+                    <label style="margin-top: 5px" id="labelYearStart">С</label>
+                    <select class="form-control" id="yearStart">
+                        <option value=2016>2016</option>
+                        <option value=2017>2017</option>
+                        <option value=2018>2018</option>
+                        <option value=2020>2020</option>
+                        <option value=2021>2021</option>
+                        <option value=2022>2022</option>
+                        <option value=2023>2023</option>
+                    </select>
+
+                    <label style="margin-top: 5px" id="labelYearEnd">По</label>
+                    <select class="form-control" id="yearEnd">
+                        <option value=2016>2016</option>
+                        <option value=2017>2017</option>
+                        <option value=2018>2018</option>
+                        <option value=2020>2020</option>
+                        <option value=2021>2021</option>
+                        <option value=2022>2022</option>
+                        <option value=2023>2023</option>
+                    </select>
+
+
+                    <button id="createEvent" type="button" class="btn btn-primary" style="margin: 10px">Создать</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <!-- Modal для создания/удаления -->
@@ -57,28 +138,17 @@
                 <label for="eventTitle">Название</label>
                 <input type="text" class="form-control" id="eventTitle">
 
-                <label style="margin-top: 5px">Тип события</label>
-                <select class="form-control" id="eventType">
-                    <option value="">Выберите тип</option>
-                    <option value="first">Первый</option>
-                    <option value="second">Второй</option>
-                    <option value="third">Третий</option>
-                    <option value="fourth">Четвертый</option>
-                </select>
-
-                <label style="margin-top: 5px">Повторять</label>
-                <select class="form-control" id="test">
-                    <option value="">Выберите тип</option>
-                    <option value="week">Раз в неделю</option>
-                    <option value="month">Раз в месяц</option>
-                    <option value="year">Раз в год</option>
-                </select>
-
                 <label for="eventStart" style="margin-top: 5px">Начало события</label>
                 <input type="text" class="form-control" id="eventStart"/>
 
                 <label for="eventEnd" style="margin-top: 5px">Конец события</label>
                 <input type="text" class="form-control" id="eventEnd"/>
+
+                <label for="periodStart" style="margin-top: 5px" id="labelPeriodEnd">Начало периода</label>
+                <input type="text" class="form-control" id="periodStart"/>
+
+                <label for="periodEnd" style="margin-top: 5px" id="labelPeriodStart">Конец периода</label>
+                <input type="text" class="form-control" id="periodEnd"/>
                 <div class="row">
 
                 </div>
@@ -91,63 +161,6 @@
     </div>
 </div>
 
-<div class="modal fade" id="modalForCreate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Придумай че-нибудь</h4>
-            </div>
-            <div class="modal-body">
-                <label for="eventTitle">Название</label>
-                <input type="text" class="form-control" id="newEventTitle" required>
-
-                <label style="margin-top: 5px">Тип события</label>
-                <select required class="form-control" id="newEventType">
-                    <option value="">Выберите тип</option>
-                    <option value="first">Первый</option>
-                    <option value="second">Второй</option>
-                    <option value="third">Третий</option>
-                    <option value="fourth">Четвертый</option>
-                </select>
-
-                <label style="margin-top: 5px">Повторять</label>
-                <select class="form-control" id="repeatType">
-                    <option value="">Выберите тип</option>
-                    <option value="week">Раз в неделю</option>
-                    <option value="month">Раз в месяц</option>
-                    <option value="year">Раз в год</option>
-                </select>
-
-                <label style="margin-top: 5px">Выберите дни</label>
-                <select class="form-control" id="days" multiple>
-                    <option value=1>Понедельник</option>
-                    <option value=2>Вторник</option>
-                    <option value=3>Среда</option>
-                    <option value=4>Четверг</option>
-                    <option value=5>Пятница</option>
-                    <option value=6>Суббота</option>
-                    <option value=0>Воскресенье</option>
-                </select>
-
-                <label for="eventStart" style="margin-top: 5px">Начало события</label>
-                <input type="text" class="form-control" id="newEventStart"/>
-
-                <label for="eventEnd" style="margin-top: 5px">Конец события</label>
-                <input type="text" class="form-control" id="newEventEnd"/>
-                <div class="row">
-
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button id="createEvent" type="button" class="btn btn-default" style="margin: 10px">Создать</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<button id="create" type="button" class="btn btn-default" style="margin: 10px">Создать событие</button>
 
 </body>
 </html>
