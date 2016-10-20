@@ -202,7 +202,25 @@ $(document).ready(function () {
         timepicker: false,
         onShow: function (ct) {
             this.setOptions({
-                minDate: $('#newPeriodStart').val() ? $('#newPeriodStart').val() : false
+                minDate: $('#newPeriodStart').datetimepicker('getTime') ? $('#newPeriodStart').datetimepicker('getTime') : false
+            })
+        }
+    });
+
+    $('#startTime').datetimepicker({
+        datepicker: false,
+        onShow: function (ct) {
+            this.setOptions({
+                maxTime: $('#endTime').datetimepicker('getTime') ? $('#endTime').datetimepicker('getTime') : false
+            })
+        }
+    });
+
+    $('#endTime').datetimepicker({
+        datepicker: false,
+        onShow: function (ct) {
+            this.setOptions({
+                minTime: $('#startTime').val() ? $('#startTime').val() : false
             })
         }
     });
@@ -219,15 +237,19 @@ $(document).ready(function () {
         var repeat = new Object();
         repeat.type = $("#repeatType option:selected").val();
         if (repeat.type) {
-            repeat.type == 'week' ? repeat.dow = JSON.stringify(dow) : null;
             if (repeat.type == 'month') {
                 repeat.periodStart = moment($('#newPeriodStart').datetimepicker('getValue')).format("YYYY-MM-DD");
                 repeat.periodEnd = moment($('#newPeriodEnd').datetimepicker('getValue')).format("YYYY-MM-DD");
             } else if (repeat.type == 'year') {
                 repeat.periodStart = $("#newYearStart option:selected").val();
                 repeat.periodEnd = $("#newYearEnd option:selected").val();
+            } else if(repeat.type == 'week') {
+                repeat.periodStart = moment($('#startTime').datetimepicker('getValue')).format("HH:mm:SS");
+                repeat.periodEnd = moment($('#endTime').datetimepicker('getValue')).format("HH:mm:SS");
             }
         }
+
+        console.log(repeat);
 
         $.ajax({
             type: 'POST',
