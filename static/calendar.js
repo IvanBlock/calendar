@@ -202,7 +202,7 @@ $(document).ready(function () {
         timepicker: false,
         onShow: function (ct) {
             this.setOptions({
-                minDate: $('#newPeriodStart').datetimepicker('getTime') ? $('#newPeriodStart').datetimepicker('getTime') : false
+                minDate: $('#newPeriodStart').val() ? $('#newPeriodStart').val() : false
             })
         }
     });
@@ -211,7 +211,7 @@ $(document).ready(function () {
         datepicker: false,
         onShow: function (ct) {
             this.setOptions({
-                maxTime: $('#endTime').datetimepicker('getTime') ? $('#endTime').datetimepicker('getTime') : false
+                maxTime: $('#endTime').datetimepicker('getValue') ? $('#endTime').datetimepicker('getValue') : false
             })
         }
     });
@@ -220,7 +220,7 @@ $(document).ready(function () {
         datepicker: false,
         onShow: function (ct) {
             this.setOptions({
-                minTime: $('#startTime').val() ? $('#startTime').val() : false
+                minTime: $('#startTime').datetimepicker('getValue') ? $('#startTime').datetimepicker('getValue') : false
             })
         }
     });
