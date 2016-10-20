@@ -70,16 +70,40 @@
                         <option value="year">Раз в год</option>
                     </select>
 
-                    <label style="margin-top: 5px" id="labelDays">Выберите дни</label>
-                    <select class="form-control" id="days" multiple>
-                        <option value=1>Понедельник</option>
-                        <option value=2>Вторник</option>
-                        <option value=3>Среда</option>
-                        <option value=4>Четверг</option>
-                        <option value=5>Пятница</option>
-                        <option value=6>Суббота</option>
-                        <option value=0>Воскресенье</option>
-                    </select>
+                    <div class="row">
+                        <div class="col-md-6">
+
+                            <label style="margin-top: 5px" id="labelStartDay">Выберите дни</label>
+                            <select class="form-control" id="startDay">
+                                <option value=1>Понедельник</option>
+                                <option value=2>Вторник</option>
+                                <option value=3>Среда</option>
+                                <option value=4>Четверг</option>
+                                <option value=5>Пятница</option>
+                                <option value=6>Суббота</option>
+                                <option value=0>Воскресенье</option>
+                            </select>
+
+                            <label style="margin-top: 5px" id="labelEndDay">Выберите дни</label>
+                            <select class="form-control" id="endDay">
+                                <option value=1>Понедельник</option>
+                                <option value=2>Вторник</option>
+                                <option value=3>Среда</option>
+                                <option value=4>Четверг</option>
+                                <option value=5>Пятница</option>
+                                <option value=6>Суббота</option>
+                                <option value=0>Воскресенье</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="eventStart" style="margin-top: 5px" id="labelStartTime">Начало</label>
+                            <input type="text" class="form-control" id="startTime"/>
+
+                            <label for="eventStart" style="margin-top: 5px" id="labelEndTime">Конец</label>
+                            <input type="text" class="form-control" id="endTime"/>
+                        </div>
+
+                    </div>
 
                     <label for="eventStart" style="margin-top: 5px">Начало события</label>
                     <input type="text" class="form-control" id="newEventStart"/>
@@ -87,10 +111,12 @@
                     <label for="eventEnd" style="margin-top: 5px">Конец события</label>
                     <input type="text" class="form-control" id="newEventEnd"/>
 
-                    <label for="newPeriodStart" style="margin-top: 5px" id="newLabelPeriodEnd">Начало периода</label>
+                    <label for="newPeriodStart" style="margin-top: 5px" id="newLabelPeriodEnd">Начало
+                        периода</label>
                     <input type="text" class="form-control" id="newPeriodStart"/>
 
-                    <label for="newPeriodEnd" style="margin-top: 5px" id="newLabelPeriodStart">Конец периода</label>
+                    <label for="newPeriodEnd" style="margin-top: 5px" id="newLabelPeriodStart">Конец
+                        периода</label>
                     <input type="text" class="form-control" id="newPeriodEnd"/>
 
                     <label style="margin-top: 5px" id="newLabelYearStart">С</label>
@@ -122,7 +148,9 @@
                     </select>
 
 
-                    <button id="createEvent" type="button" class="btn btn-primary" style="margin: 10px">Создать</button>
+                    <button id="createEvent" type="button" class="btn btn-primary" style="margin: 10px">
+                        Создать
+                    </button>
 
                 </div>
             </div>
@@ -185,14 +213,14 @@
                 </select>
 
                 <select class="form-control" id="d" multiple>
-                        <option value=1>Понедельник</option>
-                        <option value=2>Вторник</option>
-                        <option value=3>Среда</option>
-                        <option value=4>Четверг</option>
-                        <option value=5>Пятница</option>
-                        <option value=6>Суббота</option>
-                        <option value=0>Воскресенье</option>
-                    </select>
+                    <option value=1>Понедельник</option>
+                    <option value=2>Вторник</option>
+                    <option value=3>Среда</option>
+                    <option value=4>Четверг</option>
+                    <option value=5>Пятница</option>
+                    <option value=6>Суббота</option>
+                    <option value=0>Воскресенье</option>
+                </select>
 
                 <div class="row">
 

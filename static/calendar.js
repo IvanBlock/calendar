@@ -79,9 +79,27 @@ $(document).ready(function () {
     $('#newLabelYearEnd').hide();
     $('#newYearEnd').hide();
 
+    $('#labelStartDay').hide();
+    $('#startDay').hide();
+    $('#labelEndDay').hide();
+    $('#endDay').hide();
+    $('#labelStartTime').hide();
+    $('#startTime').hide();
+    $('#labelEndTime').hide();
+    $('#endTime').hide();
+
     $('#repeatType').change(function () {
         if ($('#repeatType option:selected').val() == 'week') {
-            $('#days').show();
+            $('#labelStartDay').show();
+            $('#startDay').show();
+            $('#labelEndDay').show();
+            $('#endDay').show();
+            $('#labelStartTime').show();
+            $('#startTime').show();
+            $('#labelEndTime').show();
+            $('#endTime').show();
+
+
             $('#labelDays').show();
 
             $('#newLabelYearStart').hide();
@@ -105,8 +123,14 @@ $(document).ready(function () {
             $('#newLabelYearEnd').hide();
             $('#newYearEnd').hide();
 
-            $('#days').hide();
-            $('#labelDays').hide();
+            $('#labelStartDay').hide();
+            $('#startDay').hide();
+            $('#labelEndDay').hide();
+            $('#endDay').hide();
+            $('#labelStartTime').hide();
+            $('#startTime').hide();
+            $('#labelEndTime').hide();
+            $('#endTime').hide();
         } else if ($('#repeatType option:selected').val() == 'year') {
 
             $('#newLabelYearStart').show();
@@ -118,8 +142,16 @@ $(document).ready(function () {
             $('#newPeriodEnd').hide();
             $('#newLabelPeriodEnd').hide();
             $('#newLabelPeriodStart').hide();
-            $('#days').hide();
-            $('#labelDays').hide();
+
+
+            $('#labelStartDay').hide();
+            $('#startDay').hide();
+            $('#labelEndDay').hide();
+            $('#endDay').hide();
+            $('#labelStartTime').hide();
+            $('#startTime').hide();
+            $('#labelEndTime').hide();
+            $('#endTime').hide();
         } else {
 
             $('#newLabelYearStart').hide();
@@ -130,8 +162,15 @@ $(document).ready(function () {
             $('#newPeriodEnd').hide();
             $('#newLabelPeriodEnd').hide();
             $('#newLabelPeriodStart').hide();
-            $('#days').hide();
-            $('#labelDays').hide();
+
+            $('#labelStartDay').hide();
+            $('#startDay').hide();
+            $('#labelEndDay').hide();
+            $('#endDay').hide();
+            $('#labelStartTime').hide();
+            $('#startTime').hide();
+            $('#labelEndTime').hide();
+            $('#endTime').hide();
         }
     });
     $('#newEventStart').datetimepicker({
@@ -241,7 +280,7 @@ var onEventClick = function (event, element) {
         $('#labelPeriodEnd').hide();
         $('#periodStart').hide();
         $('#periodEnd').hide();
-    } else if(event.repeat_type == 'month'){
+    } else if (event.repeat_type == 'month') {
         $('#labelYearStart').hide();
         $('#yearStart').hide();
         $('#labelYearEnd').hide();
@@ -253,7 +292,7 @@ var onEventClick = function (event, element) {
 
         $('#periodStart').show();
         $('#periodEnd').show();
-    } else if(event.repeat_type == 'year'){
+    } else if (event.repeat_type == 'year') {
         $('#labelYearStart').show();
         $('#yearStart').show();
         $('#labelYearEnd').show();
