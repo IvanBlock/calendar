@@ -251,8 +251,6 @@ $(document).ready(function () {
             }
         }
 
-        console.log(repeat);
-
         $.ajax({
             type: 'POST',
             url: 'add/',
