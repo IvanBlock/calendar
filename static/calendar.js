@@ -244,6 +244,8 @@ $(document).ready(function () {
                 repeat.periodStart = $("#newYearStart option:selected").val();
                 repeat.periodEnd = $("#newYearEnd option:selected").val();
             } else if(repeat.type == 'week') {
+                repeat.startDay = $("#startDay option:selected").val();
+                repeat.endDay = $("#endDay option:selected").val();
                 repeat.periodStart = moment($('#startTime').datetimepicker('getValue')).format("HH:mm:SS");
                 repeat.periodEnd = moment($('#endTime').datetimepicker('getValue')).format("HH:mm:SS");
             }
